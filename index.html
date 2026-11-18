@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230b1024%27/%3E%3Ctext x=%2732%27 y=%2742%27 font-family=%27Arial%27 font-weight=%27700%27 font-size=%2728%27 fill=%27%23e1b45f%27 text-anchor=%27middle%27%3ERK%3C/text%3E%3C/svg%3E" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ravi Kumar · Virtual Boardroom</title>
+<meta name="description" content="Take a seat in the boardroom. Ravi Kumar, Group Vice President – Finance, presents his career." />
+<meta property="og:image" content="assets/boardroom.webp" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root { --gold:#d9b26b; --navy:#0a1430; --text:#f3efe7; --muted:#a9a399; }
+* { box-sizing:border-box; margin:0; padding:0 }
+body { background:#050505; color:var(--text); font-family:Inter,system-ui,sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden }
+#room { position:relative; aspect-ratio:2688/1520; width:min(100vw, calc(100vh * 2688 / 1520)); background:url(assets/boardroom.webp) center/cover; container-type:inline-size }
+.vign { position:absolute; inset:0; background:radial-gradient(ellipse at 60% 40%,transparent 50%,rgba(0,0,0,.55)); pointer-events:none }
+/* Screen overlay (sits exactly on the blank wall screen) */
+#screen { position:absolute; left:34.3%; top:11.75%; width:40.45%; height:37.65%; color:#eef3ff; padding:2.2cqw 2.4cqw 2.4cqw; display:flex; flex-direction:column; overflow:hidden }
+#screen .tag { font-size:.75cqw; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); margin-bottom:.6cqw }
+#screen h2 { font-family:'Playfair Display',serif; font-size:2.05cqw; line-height:1.1; margin-bottom:1.1cqw }
+.slide { animation:in .6s ease both; flex:1; display:flex; flex-direction:column }
+@keyframes in { from { opacity:0; transform:translateY(.6cqw) } }
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:.8cqw; margin-bottom:1cqw }
+.tile { background:rgba(255,255,255,.06); border:1px solid rgba(217,178,107,.35); border-radius:.5cqw; padding:.8cqw .6cqw; text-align:center }
+.tile b { display:block; font-size:1.8cqw; color:#fff } .tile span { font-size:.72cqw; color:#c8d0e6 }
+.list { list-style:none; display:grid; gap:.5cqw; font-size:.95cqw; line-height:1.35; max-width:78% }
+.list li { display:flex; gap:.6cqw; align-items:baseline } .list li::before { content:""; flex:none; width:.5cqw; height:.5cqw; border-radius:50%; background:var(--gold); transform:translateY(-.1cqw) }
+.list small { color:#aeb8d4; display:block; font-size:.78cqw }
+.tl { display:flex; gap:.7cqw; margin-top:.4cqw; max-width:92% }
+.tl div { flex:1; border-top:2px solid var(--gold); padding-top:.5cqw; font-size:.78cqw; line-height:1.3 } .tl b { display:block; font-size:.9cqw; color:#fff } .tl i { font-style:normal; color:#aeb8d4 }
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:.6cqw; max-width:94% }
+.steps div { background:rgba(255,255,255,.05); border-left:2px solid var(--gold); padding:.5cqw .6cqw; font-size:.74cqw; line-height:1.3; cursor:pointer } .steps b { display:block; color:#fff; font-size:.82cqw } .steps div.on { background:rgba(217,178,107,.2) }
+.geo { display:flex; gap:1cqw; align-items:center } .geo .big { font-size:3.6cqw; font-weight:700; color:var(--gold); line-height:1 }
+.qa { display:grid; grid-template-columns:1fr 1fr; gap:.5cqw; max-width:90% }
+.qa button { text-align:left; background:rgba(255,255,255,.06); border:1px solid rgba(217,178,107,.35); color:#eef3ff; border-radius:.4cqw; padding:.55cqw .7cqw; font:inherit; font-size:.82cqw; cursor:pointer } .qa button:hover { background:rgba(217,178,107,.2) }
+.answer { font-size:1.05cqw; line-height:1.5; max-width:80%; color:#eef3ff }
+/* Side agenda */
+#agenda { position:absolute; left:1.6cqw; top:3cqw; width:15cqw; background:rgba(8,8,10,.72); border:1px solid rgba(255,255,255,.1); border-radius:.8cqw; padding:1.3cqw; backdrop-filter:blur(6px) }
+.logo { font-family:'Playfair Display'; font-size:2cqw; margin-bottom:1cqw } .logo b { color:var(--gold) }
+#agenda h4 { font-size:.8cqw; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); margin-bottom:.6cqw }
+#agenda ol { list-style:none; display:grid; gap:.35cqw }
+#agenda button { width:100%; display:flex; gap:.7cqw; align-items:center; text-align:left; background:none; border:0; color:var(--text); font:inherit; font-size:1cqw; padding:.5cqw .6cqw; border-radius:.5cqw; cursor:pointer }
+#agenda button i { font-style:normal; width:1.5cqw; height:1.5cqw; border-radius:50%; border:1px solid var(--muted); display:grid; place-items:center; font-size:.75cqw; flex:none }
+#agenda button.on { background:rgba(217,178,107,.18) } #agenda button.on i { background:var(--gold); color:#1a1305; border-color:var(--gold) }
+#agenda .auto { margin-top:1cqw; width:100%; background:var(--gold); color:#1a1305; border:0; border-radius:2cqw; padding:.7cqw; font-weight:700; font-size:.95cqw; cursor:pointer }
+#agenda .who { margin-top:1.2cqw; font-size:.8cqw; color:var(--muted); line-height:1.5 }
+/* Bottom bar */
+#bar { position:absolute; right:1.6cqw; bottom:1.6cqw; display:flex; gap:.7cqw }
+#bar button, #bar a { background:rgba(8,8,10,.75); color:var(--text); border:1px solid rgba(217,178,107,.6); border-radius:3cqw; padding:.8cqw 1.4cqw; font:inherit; font-size:1cqw; cursor:pointer; text-decoration:none; backdrop-filter:blur(6px) }
+#bar .hand { background:var(--gold); color:#1a1305; font-weight:700 }
+#speak { position:absolute; left:83.5%; top:9%; display:flex; gap:.25cqw; align-items:flex-end; height:2cqw; opacity:0; transition:opacity .3s }
+#speak.on { opacity:1 } #speak span { width:.3cqw; background:var(--gold); border-radius:.2cqw; animation:eq .8s ease-in-out infinite alternate }
+#speak span:nth-child(2){animation-delay:.2s} #speak span:nth-child(3){animation-delay:.4s} #speak span:nth-child(4){animation-delay:.1s}
+@keyframes eq { from { height:.4cqw } to { height:2cqw } }
+#cap { position:absolute; left:50%; bottom:5.5cqw; transform:translateX(-50%); width:min(56cqw,92%); text-align:center; background:rgba(0,0,0,.65); padding:.8cqw 1.2cqw; border-radius:.6cqw; font-size:1.15cqw; line-height:1.45; opacity:0; transition:opacity .3s; pointer-events:none }
+#cap.on { opacity:1 }
+#start { position:fixed; inset:0; z-index:9; display:grid; place-items:center; background:rgba(0,0,0,.7); backdrop-filter:blur(4px) }
+#start .card { text-align:center; padding:20px } #start h1 { font-family:'Playfair Display'; font-size:clamp(30px,4vw,52px); margin-bottom:8px } #start p { color:var(--muted); margin-bottom:22px }
+#start button { background:var(--gold); color:#1a1305; border:0; padding:14px 28px; border-radius:30px; font:inherit; font-weight:700; cursor:pointer; margin:4px }
+#start .ghost { background:none; color:var(--text); border:1px solid rgba(255,255,255,.35) }
+.foot { position:fixed; left:12px; bottom:8px; font-size:11px; color:#6d6860 }
+@media (max-aspect-ratio:4/3) { body { align-items:flex-start } }
+</style>
+</head>
+<body>
+<div id="room">
+  <div class="vign"></div>
+  <div id="screen" aria-live="polite"></div>
+  <div id="speak" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <aside id="agenda">
+    <div class="logo">RK<b>.</b></div>
+    <h4>Agenda</h4>
+    <ol id="ag"></ol>
+    <button class="auto" id="auto">▶ Present all</button>
+    <div class="who">Presenting: <b>Ravi Kumar</b><br />Group VP – Finance, Miles Education</div>
+  </aside>
+  <div id="bar"><a href="Ravi_Kumar_Resume.pdf" download>Resume</a><button id="snd">🔊 Sound</button><button class="hand" id="hand">✋ Raise hand · Ask a question</button></div>
+  <div id="cap"></div>
+</div>
+<div id="start"><div class="card"><h1>The Boardroom</h1><p>Take your seat. Ravi Kumar will present his finance leadership story.</p><button id="go">Take a seat (sound on)</button><button class="ghost" id="mute">Sound off</button></div></div>
+<p class="foot">Images are AI-generated from Ravi’s photo. The voice is an AI clone of Ravi’s own voice, used with his permission.</p>
+<script src="data.js"></script>
+<script src="voice.js"></script>
+<script>
+const R = window.RAVI, S = R.say, A = R.askRavi.answers, E = R.experience;
+const slides = [
+  { t:'Profile', tag:'01 · Profile', h:'Group Finance at a Glance', lines:['Hello, I’m Ravi Kumar. Welcome to my portfolio.', A.about.a],
+    html:() => `<div class="tiles">${R.kpis.slice(0,4).map(k=>`<div class="tile"><b>${k.prefix}${k.value}${k.suffix}</b><span>${k.label}</span></div>`).join('')}</div>
+      <ul class="list"><li><div>${R.profile.title}, ${R.profile.employer}<small>${R.profile.credential} · ${R.profile.location}</small></div></li><li><div>CFO-equivalent partner to the CEO and board<small>17 entities · India, US, Middle East</small></div></li></ul>` },
+  { t:'Career', tag:'02 · Career', h:'From Audit to Group Finance', lines:[S.experience[3], S.experience[2], S.experience[1], S.experience[0]],
+    html:() => `<div class="tl">${[...E].reverse().map(e=>`<div><b>${e.org.replace(' LLP','')}</b>${e.role}<br><i>${e.period}</i></div>`).join('')}</div>` },
+  { t:'Transformation', tag:'03 · Transformation', h:R.transformation.title, lines:S.stages,
+    html:() => `<div class="steps">${R.transformation.stages.map((s,i)=>`<div data-i="${i}"><b>${i+1}. ${s.name}</b>${s.text}</div>`).join('')}</div>` },
+  { t:'Deals & IPO', tag:'04 · Deals', h:'Capital Markets Experience', lines:[A.ipo.a],
+    html:() => `<div class="geo"><div class="big">US$456M</div><div style="font-size:1cqw;line-height:1.4">NASDAQ SPAC transaction<br><span style="color:#aeb8d4">Listing readiness · Grant Thornton Bharat</span></div></div>
+      <ul class="list" style="margin-top:1cqw"><li>Accounting, SEC readiness and compliance ownership</li><li>IPO readiness and fundraising with the board at Aris Global</li><li>M&A advisory with the CEO, CFO and board</li></ul>` },
+  { t:'Global', tag:'05 · Global', h:R.globalOps.label, lines:[S.achievements[3], S.kpis[2]],
+    html:() => `<div class="geo"><div class="big">17</div><div style="font-size:1cqw">entities across<br>three geographies</div></div>
+      <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin-top:1cqw">${R.globalOps.regions.map(r=>`<div class="tile"><b style="font-size:1.2cqw">${r.name}</b><span>${r.note}</span></div>`).join('')}</div>` },
+  { t:'Q&A', tag:'06 · Q&A', h:'Questions for Ravi', lines:['Ask me anything from my resume.'],
+    html:() => `<div class="qa">${R.askRavi.questions.map(q=>`<button data-id="${q.id}">${q.q}</button>`).join('')}</div>` },
+];
+const ag = document.getElementById('ag'), screen = document.getElementById('screen');
+slides.forEach((s, i) => { const li = document.createElement('li'); li.innerHTML = `<button><i>${i+1}</i>${s.t}</button>`; li.firstChild.onclick = () => { autoplay = false; show(i, true); }; ag.appendChild(li); });
+let cur = -1, sound = true, autoplay = false, token = 0;
+const cap = document.getElementById('cap'), spk = document.getElementById('speak');
+function narrate(lines, done, onLine) {
+  const my = ++token; let i = 0;
+  const next = () => {
+    if (my !== token) return;
+    if (i >= lines.length) { cap.classList.remove('on'); spk.classList.remove('on'); done && done(); return; }
+    const idx = i, t = lines[i++]; onLine && onLine(idx);
+    cap.textContent = t.replace('F P and A','FP&A'); cap.classList.add('on'); spk.classList.add('on');
+    if (sound) Voice.speak(t, next); else setTimeout(next, Math.max(2600, t.length * 55));
+  };
+  Voice.stop(); next();
+}
+function show(i, speak) {
+  cur = i; const s = slides[i];
+  [...ag.children].forEach((li, j) => li.firstChild.classList.toggle('on', j === i));
+  screen.innerHTML = `<div class="slide"><div class="tag">${s.tag}</div><h2>${s.h}</h2>${s.html()}</div>`;
+  screen.querySelectorAll('.qa button').forEach(b => b.onclick = () => answer(b.dataset.id));
+  screen.querySelectorAll('.steps div').forEach(d => d.onclick = () => { autoplay = false; narrate([S.stages[+d.dataset.i]], null, () => mark(+d.dataset.i)); });
+  const mark = k => screen.querySelectorAll('.steps div').forEach((d, j) => d.classList.toggle('on', j === k));
+  if (speak) narrate(s.lines, () => { if (autoplay && cur < slides.length - 1) setTimeout(() => show(cur + 1, true), 700); }, s.t === 'Transformation' ? mark : null);
+}
+function answer(id) {
+  autoplay = false; const a = A[id], q = R.askRavi.questions.find(x => x.id === id).q;
+  screen.innerHTML = `<div class="slide"><div class="tag">Q&A</div><h2>${q}</h2><p class="answer">${a.a}</p><div style="margin-top:auto"><button class="back" style="background:none;border:1px solid rgba(217,178,107,.6);color:#eef3ff;border-radius:2cqw;padding:.5cqw 1cqw;font:inherit;font-size:.85cqw;cursor:pointer">← More questions</button></div></div>`;
+  screen.querySelector('.back').onclick = () => show(slides.length - 1, false);
+  narrate([a.a]);
+}
+document.getElementById('auto').onclick = () => { autoplay = true; show(0, true); };
+document.getElementById('hand').onclick = () => { autoplay = false; show(slides.length - 1, true); };
+const sndBtn = document.getElementById('snd');
+function setSound(on) { sound = on; sndBtn.textContent = on ? '🔊 Sound' : '🔇 Muted'; if (!on) Voice.stop(); }
+sndBtn.onclick = () => setSound(!sound);
+function enter(s) { setSound(s); document.getElementById('start').remove(); autoplay = false; show(0, true); }
+document.getElementById('go').onclick = () => enter(true);
+document.getElementById('mute').onclick = () => enter(false);
+show(0, false);
+</script>
+</body>
+</html>
